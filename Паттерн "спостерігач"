@@ -1,24 +1,37 @@
-#pragma once
+#include "Devices.h"
 
-#include "Observer.h"
-#include <iostream>
-
-using namespace std;
-
-class AirConditioner : public Observer
+void AirConditioner::update(float temperature, float humidity)
 {
-public:
-void update(float temperature, float humidity) override;
-};
-
-class Humidifier : public Observer
+if (temperature > 25)
 {
-public:
-void update(float temperature, float humidity) override;
-};
-
-class Ventilation : public Observer
+cout << "Кондицiонер: охолоджую будинок.\n";
+}
+else
 {
-public:
-void update(float temperature, float humidity) override;
-};
+cout << "Кондицiонер: температура нормальна.\n";
+}
+}
+
+void Humidifier::update(float temperature, float humidity)
+{
+if (humidity < 40)
+{
+cout << "Зволожувач: пiдвищую вологiсть.\n";
+}
+else
+{
+cout << "Зволожувач: вологiсть нормальна.\n";
+}
+}
+
+void Ventilation::update(float temperature, float humidity)
+{
+if (temperature > 28)
+{
+cout << "Вентиляцiя: провiтрюю будинок.\n";
+}
+else
+{
+cout << "Вентиляцiя: провiтрювання не потрiбне.\n";
+}
+}
