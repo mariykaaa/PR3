@@ -1,37 +1,35 @@
+#include <iostream>
+#include <windows.h>
+
+#include "Hub.h"
 #include "Devices.h"
 
-void AirConditioner::update(float temperature, float humidity)
-{
-if (temperature > 25)
-{
-cout << "Кондицiонер: охолоджую будинок.\n";
-}
-else
-{
-cout << "Кондицiонер: температура нормальна.\n";
-}
-}
+using namespace std;
 
-void Humidifier::update(float temperature, float humidity)
+int main()
 {
-if (humidity < 40)
-{
-cout << "Зволожувач: пiдвищую вологiсть.\n";
-}
-else
-{
-cout << "Зволожувач: вологiсть нормальна.\n";
-}
-}
+SetConsoleCP(65001);
+SetConsoleOutputCP(65001);
 
-void Ventilation::update(float temperature, float humidity)
-{
-if (temperature > 28)
-{
-cout << "Вентиляцiя: провiтрюю будинок.\n";
-}
-else
-{
-cout << "Вентиляцiя: провiтрювання не потрiбне.\n";
-}
+Hub hub;
+
+AirConditioner airConditioner;
+Humidifier humidifier;
+Ventilation ventilation;
+
+// Підключаємо пристрої до хаба
+hub.addObserver(&airConditioner);
+hub.addObserver(&humidifier);
+hub.addObserver(&ventilation);
+
+cout << "=== Перша змiна клiмату ===\n";
+hub.setClimate(30, 35);
+
+cout << "\n=== Вiдключаємо зволожувач ===\n";
+hub.removeObserver(&humidifier);
+
+cout << "\n=== Друга змiна клiмату ===\n";
+hub.setClimate(20, 50);
+
+return 0;
 }
