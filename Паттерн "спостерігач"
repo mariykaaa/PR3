@@ -1,22 +1,41 @@
-#pragma once
-
-#include "Observer.h"
-#include <vector>
+#include "Hub.h"
+#include <iostream>
 
 using namespace std;
 
-class Hub
+void Hub::addObserver(Observer* observer)
 {
-private:
-float temperature;
-float humidity;
+observers.push_back(observer);
+}
 
-vector<Observer*> observers;
+void Hub::removeObserver(Observer* observer)
+{
+for (int i = 0; i < observers.size(); i++)
+{
+if (observers[i] == observer)
+{
+observers.erase(observers.begin() + i);
+break;
+}
+}
+}
 
-public:
-void addObserver(Observer* observer);
-void removeObserver(Observer* observer);
-void notifyObservers();
+void Hub::notifyObservers()
+{
+for (Observer* observer : observers)
+{
+observer->update(temperature, humidity);
+}
+}
 
-void setClimate(float temperature, float humidity);
-};
+void Hub::setClimate(float temperature, float humidity)
+{
+this->temperature = temperature;
+this->humidity = humidity;
+
+cout << "Змiна клiмату: "
+<< temperature << " C, "
+<< humidity << "%\n";
+
+notifyObservers();
+}
