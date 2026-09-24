@@ -1,41 +1,24 @@
-#include "Hub.h"
+#pragma once
+
+#include "Observer.h"
 #include <iostream>
 
 using namespace std;
 
-void Hub::addObserver(Observer* observer)
+class AirConditioner : public Observer
 {
-observers.push_back(observer);
-}
+public:
+void update(float temperature, float humidity) override;
+};
 
-void Hub::removeObserver(Observer* observer)
+class Humidifier : public Observer
 {
-for (int i = 0; i < observers.size(); i++)
-{
-if (observers[i] == observer)
-{
-observers.erase(observers.begin() + i);
-break;
-}
-}
-}
+public:
+void update(float temperature, float humidity) override;
+};
 
-void Hub::notifyObservers()
+class Ventilation : public Observer
 {
-for (Observer* observer : observers)
-{
-observer->update(temperature, humidity);
-}
-}
-
-void Hub::setClimate(float temperature, float humidity)
-{
-this->temperature = temperature;
-this->humidity = humidity;
-
-cout << "Змiна клiмату: "
-<< temperature << " C, "
-<< humidity << "%\n";
-
-notifyObservers();
-}
+public:
+void update(float temperature, float humidity) override;
+};
